@@ -1,0 +1,12 @@
+<!DOCTYPE html><html><body style="margin:0;background:#111"><canvas id=c width=400 height=600 style="display:block;margin:auto;background:#000"></canvas><script>
+const c=document.getElementById('c'),x=c.getContext('2d'),k={};let p,r,s,o;
+onkeydown=e=>{k[e.key]=1;if(o&&e.key==' ')init()};onkeyup=e=>k[e.key]=0;
+function init(){p={x:200,y:550};r=[];s=0;o=0}init();
+function f(){if(!o){if(k.ArrowLeft)p.x-=6;if(k.ArrowRight)p.x+=6;if(k.ArrowUp)p.y-=6;if(k.ArrowDown)p.y+=6;
+p.x=Math.max(10,Math.min(390,p.x));p.y=Math.max(10,Math.min(590,p.y));s++;
+if(Math.random()<.04+s/20000)r.push({x:Math.random()*400,y:-10,v:2+Math.random()*3+s/600});
+for(const b of r){b.y+=b.v;if(Math.hypot(b.x-p.x,b.y-p.y)<18)o=1}r=r.filter(b=>b.y<620)}
+x.fillStyle='#000';x.fillRect(0,0,400,600);x.fillStyle='#f44';for(const b of r)x.fillRect(b.x-8,b.y-8,16,16);
+x.fillStyle='#4f4';x.beginPath();x.arc(p.x,p.y,10,0,7);x.fill();x.fillStyle='#fff';x.font='20px monospace';x.fillText('Score '+s,10,25);
+if(o){x.fillText('GAME OVER - Space to restart',40,300)}requestAnimationFrame(f)}f();
+</script></body></html>

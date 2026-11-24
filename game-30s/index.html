@@ -1,0 +1,14 @@
+<!DOCTYPE html><html><body style="margin:0;background:#111;display:flex;justify-content:center;align-items:center;height:100vh"><canvas id=c width=400 height=600></canvas><script>
+const c=document.getElementById('c'),x=c.getContext('2d'),k={};let p,r,s,t,over;
+function reset(){p=200;r=[];s=0;t=0;over=false}reset();
+onkeydown=e=>{k[e.key]=1;if(over&&e.key==' ')reset()};onkeyup=e=>k[e.key]=0;
+function loop(){x.fillStyle='#111';x.fillRect(0,0,400,600);
+if(!over){t++;s++;if(k.ArrowLeft||k.a)p-=6;if(k.ArrowRight||k.d)p+=6;p=Math.max(15,Math.min(385,p));
+if(Math.random()<0.03+t/20000)r.push({x:Math.random()*400,y:-20,v:2+Math.random()*3+t/600,w:15+Math.random()*25});
+for(const o of r){o.y+=o.v;if(Math.abs(o.x-p)<o.w/2+12&&Math.abs(o.y-570)<o.w/2+12)over=true}r=r.filter(o=>o.y<650)}
+x.fillStyle='#e44';for(const o of r)x.fillRect(o.x-o.w/2,o.y-o.w/2,o.w,o.w);
+x.fillStyle='#4cf';x.beginPath();x.arc(p,570,12,0,7);x.fill();
+x.fillStyle='#fff';x.font='20px monospace';x.fillText('Score: '+s,10,30);
+if(over){x.font='30px monospace';x.fillText('GAME OVER',115,280);x.font='18px monospace';x.fillText('Press Space to retry',95,320)}
+requestAnimationFrame(loop)}loop();
+</script></body></html>
